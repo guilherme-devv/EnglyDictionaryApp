@@ -1,70 +1,70 @@
 import { Alert } from 'react-native';
-import { Audio } from 'expo-av';
+import { createAudioPlayer, AudioPlayer } from 'expo-audio';
 
 export class AudioService {
-  private static currentSound: Audio.Sound | null = null;
+  private static currentPlayer: AudioPlayer | null = null;
   private static currentAudioUrl: string | null = null;
 
   static async playAudio(audioUrl: string): Promise<void> {
     try {
-      if (this.currentAudioUrl === audioUrl && this.currentSound) {
-        return this.stopAudio();
+      if (this.currentAudioUrl === audioUrl && this.currentPlayer) {
+        if (this.currentPlayer.playing) {
+          return this.stopAudio();
+        } else {
+          this.currentPlayer.play();
+          return;
+        }
       }
 
-      if (this.currentSound) await this.stopAudio();
+      if (this.currentPlayer) await this.stopAudio();
 
-      await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-        staysActiveInBackground: false,
+      const player = createAudioPlayer(audioUrl);
+
+      this.currentPlayer = player;
+      this.currentAudioUrl = audioUrl;
+
+      player.addListener('playbackStatusUpdate', (status) => {
+        if (status.didJustFinish) {
+          this.cleanup();
+        }
       });
 
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: audioUrl },
-        { shouldPlay: true },
-        this.onPlaybackStatusUpdate
-      );
-
-      this.currentSound = sound;
-      this.currentAudioUrl = audioUrl;
-      await sound.playAsync();
+      player.play();
     } catch (error) {
       Alert.alert('Error', 'Failed to play audio');
-      this.currentSound = null;
+      this.currentPlayer = null;
       this.currentAudioUrl = null;
       throw new Error('Failed to play audio');
     }
   }
 
   static async stopAudio(): Promise<void> {
-    if (this.currentSound) {
+    if (this.currentPlayer) {
       try {
-        await this.currentSound.stopAsync();
-        await this.currentSound.unloadAsync();
+        this.currentPlayer.pause();
+        
       } catch (error) {
         Alert.alert('Error', 'Error stopping audio');
       } finally {
-        this.currentSound = null;
+        this.currentPlayer = null;
         this.currentAudioUrl = null;
       }
     }
   }
 
   static isPlaying(audioUrl: string): boolean {
-    return this.currentAudioUrl === audioUrl && this.currentSound !== null;
+    return this.currentAudioUrl === audioUrl && this.currentPlayer !== null && this.currentPlayer.playing;
   }
 
   static getCurrentAudioUrl(): string | null {
     return this.currentAudioUrl;
   }
 
-  private static onPlaybackStatusUpdate = (status: any) => {
-    if (status.isLoaded && status.didJustFinish) {
-      AudioService.currentSound = null;
-      AudioService.currentAudioUrl = null;
+  static cleanup(): void {
+    if (this.currentPlayer) {
+      this.currentPlayer.pause();
+      this.currentPlayer = null;
     }
-  };
-
-  static async cleanup(): Promise<void> {
-    await this.stopAudio();
+    this.currentAudioUrl = null;
   }
 }

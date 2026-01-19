@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 
 interface WordListItemProps {
   word: string;
@@ -13,7 +14,7 @@ export function WordListItem({ word, onPress }: WordListItemProps) {
   return (
     <TouchableOpacity
       style={[
-        styles.container,
+        styles.listItemContainer,
         {
           backgroundColor: theme.surface,
           borderColor: theme.border,
@@ -22,26 +23,8 @@ export function WordListItem({ word, onPress }: WordListItemProps) {
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <Text style={[styles.text, { color: theme.text }]}>{word}</Text>
+      <Text style={[styles.listItemText, { color: theme.text }]}>{word}</Text>
     </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    margin: 4,
-    borderRadius: 12,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 60,
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});

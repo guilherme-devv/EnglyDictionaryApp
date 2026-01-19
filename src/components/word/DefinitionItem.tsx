@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 import { Definition } from '@/src/models';
 
 interface DefinitionItemProps {
@@ -12,19 +13,19 @@ export function DefinitionItem({ definition, index }: DefinitionItemProps) {
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.number, { color: theme.textSecondary }]}>
+    <View style={styles.definitionContainer}>
+      <Text style={[styles.definitionNumber, { color: theme.textSecondary }]}>
         {index + 1}.
       </Text>
-      <View style={styles.content}>
-        <Text style={[styles.definition, { color: theme.text }]}>
+      <View style={styles.definitionContent}>
+        <Text style={[styles.definitionText, { color: theme.text }]}>
           {definition.definition}
         </Text>
 
         {definition.example && (
           <Text
             style={[
-              styles.example,
+              styles.definitionExample,
               {
                 color: theme.textSecondary,
                 borderLeftColor: theme.border,
@@ -61,43 +62,3 @@ export function DefinitionItem({ definition, index }: DefinitionItemProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  number: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginRight: 8,
-    marginTop: 2,
-  },
-  content: {
-    flex: 1,
-  },
-  definition: {
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 8,
-  },
-  example: {
-    fontSize: 15,
-    lineHeight: 22,
-    fontStyle: 'italic',
-    marginBottom: 8,
-    paddingLeft: 12,
-    borderLeftWidth: 3,
-  },
-  tagContainer: {
-    marginTop: 8,
-  },
-  tagLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  tagText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-});

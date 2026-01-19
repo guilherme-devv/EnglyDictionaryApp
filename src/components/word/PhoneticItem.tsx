@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Volume2, Loader2 } from 'lucide-react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 import { Phonetic } from '@/src/models';
 
 interface PhoneticItemProps {
@@ -18,20 +19,20 @@ export function PhoneticItem({ phonetic, isPlaying, onPlay }: PhoneticItemProps)
   return (
     <View
       style={[
-        styles.container,
+        styles.phoneticContainer,
         {
           backgroundColor: theme.surface,
           borderColor: theme.border,
         },
       ]}
     >
-      <Text style={[styles.text, { color: theme.primaryLight }]}>
+      <Text style={[styles.phoneticText, { color: theme.primaryLight }]}>
         {phonetic.text}
       </Text>
       {phonetic.audio && (
         <TouchableOpacity
           style={[
-            styles.button,
+            styles.phoneticButton,
             {
               backgroundColor: isPlaying
                 ? theme.primary
@@ -54,25 +55,3 @@ export function PhoneticItem({ phonetic, isPlaying, onPlay }: PhoneticItemProps)
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 8,
-    borderWidth: 1,
-  },
-  text: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  button: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

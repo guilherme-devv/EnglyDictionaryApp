@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 import { Meaning } from '@/src/models';
 import { DefinitionItem } from './DefinitionItem';
 
@@ -12,10 +13,10 @@ export function MeaningSection({ meaning }: MeaningSectionProps) {
   const { theme, isDark } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={styles.meaningContainer}>
       <View
         style={[
-          styles.badge,
+          styles.meaningBadge,
           {
             backgroundColor: isDark ? '#1E3A8A' : '#DBEAFE',
           },
@@ -23,7 +24,7 @@ export function MeaningSection({ meaning }: MeaningSectionProps) {
       >
         <Text
           style={[
-            styles.partOfSpeech,
+            styles.meaningPartOfSpeech,
             {
               color: isDark ? '#93C5FD' : '#1E40AF',
             },
@@ -62,31 +63,3 @@ export function MeaningSection({ meaning }: MeaningSectionProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 32,
-  },
-  badge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginBottom: 16,
-  },
-  partOfSpeech: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  tagContainer: {
-    marginTop: 8,
-  },
-  tagLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  tagText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-});

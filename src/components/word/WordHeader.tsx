@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 
 interface WordHeaderProps {
   word: string;
@@ -11,10 +12,10 @@ export function WordHeader({ word, phonetic }: WordHeaderProps) {
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.word, { color: theme.text }]}>{word}</Text>
+    <View style={styles.headerContainer}>
+      <Text style={[styles.headerWord, { color: theme.text }]}>{word}</Text>
       {phonetic && (
-        <Text style={[styles.phonetic, { color: theme.primaryLight }]}>
+        <Text style={[styles.headerPhonetic, { color: theme.primaryLight }]}>
           {phonetic}
         </Text>
       )}
@@ -22,17 +23,3 @@ export function WordHeader({ word, phonetic }: WordHeaderProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 24,
-  },
-  word: {
-    fontSize: 40,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  phonetic: {
-    fontSize: 20,
-    fontWeight: '500',
-  },
-});

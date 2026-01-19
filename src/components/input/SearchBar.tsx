@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import { Search, X } from 'lucide-react-native';
 import { useTheme } from '@/src/hooks';
+import { styles } from './styles';
 
 interface SearchBarProps {
   value: string;
@@ -40,25 +41,3 @@ export function SearchBar({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    marginTop: 12,
-    height: 48,
-  },
-  icon: {
-    marginRight: 8,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    paddingVertical: 8,
-  },
-  clearButton: {
-    padding: 4,
-    marginLeft: 4,
-  },
-});

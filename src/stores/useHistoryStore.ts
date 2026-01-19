@@ -28,7 +28,7 @@ export const useHistoryStore = create<HistoryState>((set, get) => ({
     const wordLower = word.toLowerCase();
     await HistoryStorage.addToHistory(wordLower);
 
-    // Optimistic update: move to top or add to top
+    
     set((state) => {
       const filtered = state.history.filter((w) => w !== wordLower);
       return { history: [wordLower, ...filtered] };

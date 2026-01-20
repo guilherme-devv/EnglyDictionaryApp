@@ -12,7 +12,7 @@ Eu construí este projeto seguindo a arquitetura **MVVM (Model-View-ViewModel)**
 - **Zustand**: Gerenciamento de estado global para sincronização em tempo real entre as telas.
 - **Axios**: Busca de dados da API com tratamento estruturado.
 - **Async Storage**: Persistência local para favoritos e histórico.
-- **Expo AV**: Reprodução de áudio para pronúncias das palavras.
+- **Expo Audio**: Reprodução de áudio para pronúncias das palavras.
 - **Lucide React Native**: Iconografia moderna e consistente.
 - **Skeleton Loaders**: Experiência de usuário (UX) aprimorada com estados de carregamento estruturados.
 
